@@ -4,10 +4,10 @@ import SubHeading from "./SubHeading";
 import { Button } from "flowbite-react";
 import CreateProductForm from "./CreateProductForm";
 
-const Drawer = ({ isDrawerOpen, handleDrawer, products }) => {
+const Drawer = ({ isDrawerOpen, handleDrawer, products ,addProduct}) => {
   return (
     <div
-      className={`fixed z-20 p-4 bg-neutral-100 shadow-sm  w-[40%] duration-200 ease-in-out h-screen right-0 top-0 flex flex-col ${
+      className={`fixed  z-20 p-4 bg-neutral-100 shadow-sm  w-[40%] duration-200 ease-in-out h-screen right-0 top-0 flex flex-col ${
         isDrawerOpen && "translate-x-full"
       } `}
     >
@@ -45,7 +45,7 @@ const Drawer = ({ isDrawerOpen, handleDrawer, products }) => {
           </div>
         ))}
       </div>
-      <CreateProductForm></CreateProductForm>
+      <CreateProductForm addProduct={addProduct}></CreateProductForm>
     </div>
   );
 };

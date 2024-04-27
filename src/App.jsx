@@ -8,8 +8,10 @@ import Footer from "./components/Footer";
 import CheckOutForm from "./components/CheckOutForm";
 import CheckOutItemList from "./components/CheckOutItemList";
 import Drawer from "./components/Drawer";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
+  const [items, setItem] = useState([]);
   const [products, setProduct] = useState([
     { id: 1, title: "Apple", price: 1.5, stock: 100 },
     { id: 2, title: "Banana", price: 0.75, stock: 150 },
@@ -18,6 +20,27 @@ const App = () => {
     { id: 5, title: "Strawberry", price: 3.5, stock: 90 },
   ]);
   const [isDrawerOpen, setDrawerOpen] = useState(true);
+  const addItem = (newItem) => {
+    setItem([...items, newItem]);
+  };
+  const addProduct=(newProduct) => {
+    setProduct([...products,newProduct])
+    
+  }
+  const deleteItem = (id) => {
+    setItem(items.filter((item) => item.id !== id));
+  };
+  const updateQuantity = (id, amount) => {
+    setItem(
+      items.map((item) => {
+        if (item.id === id) {
+          item.quantity = item.quantity + amount;
+          item.cost = parseFloat(item.quantity * item.product.price).toFixed(2);
+        }
+        return item;
+      })
+    );
+  };
 
   const handleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -31,19 +54,32 @@ const App = () => {
         </Container>
       </Header>
       <Container>
-        <CheckOutForm products={products} />
-        <CheckOutItemList />
+        <CheckOutForm addItem={addItem} products={products} />
+        <CheckOutItemList
+
+          items={items}
+          
+          updateQuantity={updateQuantity}
+          deleteItem={deleteItem}
+        />
       </Container>
 
       <Footer>
         <Container>
           <div className="flex justify-end gap-5 items-center">
-            <Button color="dark" onClick={handleDrawer}>Manage Inventory</Button>
+            <Button color="dark" onClick={handleDrawer}>
+              Manage Inventory
+            </Button>
             <Button color="light">Print</Button>
           </div>
         </Container>
       </Footer>
-      <Drawer isDrawerOpen={isDrawerOpen} handleDrawer={handleDrawer} products={products}></Drawer>
+      <Drawer addProduct={addProduct}
+        isDrawerOpen={isDrawerOpen}
+        handleDrawer={handleDrawer}
+        products={products}
+      ></Drawer>
+      <Toaster position="bottom-left"  reverseOrder={false} />
     </main>
   );
 };
