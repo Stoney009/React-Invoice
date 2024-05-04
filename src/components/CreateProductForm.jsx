@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import SubHeading from "./SubHeading";
 import { Label, TextInput, Button } from "flowbite-react";
+import toast from "react-hot-toast";
 const CreateProductForm = ({ addProduct }) => {
   const formRef = useRef();
   const nameRef = useRef();
@@ -16,6 +17,8 @@ const CreateProductForm = ({ addProduct }) => {
     };
     addProduct(newProduct);
     formRef.current.reset();
+    toast.success("New product added")
+
   };
   return (
     <div>

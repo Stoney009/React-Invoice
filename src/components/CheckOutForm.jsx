@@ -1,6 +1,7 @@
 import { Select, Label, TextInput, Button } from "flowbite-react";
 import React, { useRef } from "react";
 import Container from "./Container";
+import toast from "react-hot-toast";
 
 const CheckOutForm = ({ products, addItem }) => {
   const selectRef = useRef();
@@ -23,8 +24,14 @@ const CheckOutForm = ({ products, addItem }) => {
       quantity,
       cost,
     };
-    addItem(newItem);
-    formRef.current.reset()
+    if (currentProduct.stock >= quantity) {
+      addItem(newItem);
+      currentProduct.stock -= quantity;
+      formRef.current.reset();
+      toast.success("New item added to your list");
+    } else {
+      toast.error("our stock is not sufficient");
+    }
   };
   return (
     <>

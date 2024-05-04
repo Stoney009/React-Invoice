@@ -5,11 +5,18 @@ import Swal from "sweetalert2";
 
 const List = ({ item, deleteItem, updateQuantity, products }) => {
   const handlePlus = () => {
-    updateQuantity(item.id, 1);
+    if (item.product.stock > 0) {
+      updateQuantity(item.id, 1);
+      item.product.stock -= 1;
+    }else{
+      return toast.error("Insufficient stock")
+    }
+    
   };
   const handleMInus = () => {
     if (item.quantity > 1) {
       updateQuantity(item.id, -1);
+      item.product.stock += 1;
     } else {
       toast.error("U can't reduce from this quantity", { duration: 500 });
     }
