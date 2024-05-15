@@ -1,9 +1,11 @@
 import { Select, Label, TextInput, Button } from "flowbite-react";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import Container from "./Container";
 import toast from "react-hot-toast";
+import { GeneralContext } from "../context/GeneralProvider";
 
-const CheckOutForm = ({ products, addItem }) => {
+const CheckOutForm = () => {
+  const {products,addItem}=useContext(GeneralContext)
   const selectRef = useRef();
   const quantityRef = useRef();
   const formRef = useRef();

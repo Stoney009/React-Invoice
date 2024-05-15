@@ -2,21 +2,25 @@ import React from "react";
 import { Table, Button } from "flowbite-react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useContext } from "react";
+import { GeneralContext } from "../context/GeneralProvider";
 
-const List = ({ item, deleteItem, updateQuantity, products }) => {
+const List = ({ item }) => {
+  const {  deleteItem, updateQuantity } = useContext(GeneralContext);
   const handlePlus = () => {
     if (item.product.stock > 0) {
       updateQuantity(item.id, 1);
       item.product.stock -= 1;
-    }else{
-      return toast.error("Insufficient stock")
+      toast.success("Quantity increased");
+    } else {
+      return toast.error("Insufficient stock");
     }
-    
   };
   const handleMInus = () => {
     if (item.quantity > 1) {
       updateQuantity(item.id, -1);
       item.product.stock += 1;
+      toast.success("Quantity decreased");
     } else {
       toast.error("U can't reduce from this quantity", { duration: 500 });
     }

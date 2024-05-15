@@ -3,12 +3,16 @@ import MainHeading from "./MainHeading";
 import SubHeading from "./SubHeading";
 import { Button } from "flowbite-react";
 import CreateProductForm from "./CreateProductForm";
+import { useContext } from "react";
+import { GeneralContext } from "../context/GeneralProvider";
 
-const Drawer = ({ isDrawerOpen, handleDrawer, products ,addProduct}) => {
+const Drawer = () => {
+  const { handleDrawer, openDrawer } = useContext(GeneralContext);
+  const {products,addProduct}=useContext(GeneralContext)
   return (
     <div
       className={`fixed  z-20 p-4 bg-neutral-100 shadow-sm  w-[40%] duration-200 ease-in-out h-screen right-0 top-0 flex flex-col ${
-        isDrawerOpen && "translate-x-full"
+        openDrawer && "translate-x-full"
       } `}
     >
       <div className=" flex justify-between">
@@ -38,9 +42,14 @@ const Drawer = ({ isDrawerOpen, handleDrawer, products ,addProduct}) => {
         </Button>
       </div>
       <div className=" ">
-        {products.map(({ title, price, stock,id}) => (
-          <div key={id} className="border border-gray-500 flex justify-between p-2 mb-3 shadow-md rounded-md">
-            <p>{title} <span className="text-sm text-gray-600">({stock})</span></p>
+        {products.map(({ title, price, stock, id }) => (
+          <div
+            key={id}
+            className="border border-gray-500 flex justify-between p-2 mb-3 shadow-md rounded-md"
+          >
+            <p>
+              {title} <span className="text-sm text-gray-600">({stock})</span>
+            </p>
             <p>{price}</p>
           </div>
         ))}

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Table } from "flowbite-react";
 import List from "./List";
+import { GeneralContext } from "../context/GeneralProvider";
 
-const CheckOutItemList = ({ items,deleteItem,updateQuantity}) => {
+const CheckOutItemList = () => {
+  const { items} =useContext(GeneralContext)
   return (
     <div className="overflow-x-auto">
       <Table className="item-center">
@@ -17,7 +19,7 @@ const CheckOutItemList = ({ items,deleteItem,updateQuantity}) => {
         </Table.Head>
         <Table.Body className="divide-y">
           {items.map((item) => (
-            <List key={item.id} item={item}  updateQuantity={updateQuantity} deleteItem={deleteItem} />
+            <List key={item.id} item={item}   />
           ))}
           {items.length === 0 && (
             <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
